@@ -5,7 +5,6 @@
 
 import React, { useState } from 'react';
 import { Plus, Home } from 'lucide-react';
-import { Logo } from './components/Logo';
 import { BackgroundEffects } from './components/BackgroundEffects';
 import { CreateRoomModal } from './components/CreateRoomModal';
 import { JoinRoomModal } from './components/JoinRoomModal';
@@ -69,7 +68,11 @@ export default function App() {
         <main className="relative z-10 w-full max-w-[440px] min-h-screen flex flex-col justify-between px-5 pt-8 pb-0 mx-auto select-none">
           {/* Top Logo Section */}
           <header className="w-full pt-4 pb-2 flex justify-center items-center">
-            <Logo size="md" />
+            <img
+              src="/logo.png"
+              alt="Phantom Call Logo"
+              className="h-16 w-auto object-contain mix-blend-screen drop-shadow-[0_0_10px_rgba(6,182,212,0.5)] transition-transform duration-300 hover:scale-105"
+            />
           </header>
 
           {/* Center Main Action Buttons - ONLY TWO BUTTONS */}
