@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Cairo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #050814;
+    color: #ffffff;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+.font-rajdhani {
+  font-family: 'Rajdhani', sans-serif;
+}
+
+/* Neon Glows */
+.glow-purple {
+  box-shadow: 0 0 35px -5px rgba(147, 51, 234, 0.65), 0 0 15px 0 rgba(168, 85, 247, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+}
+
+.glow-purple-hover:hover {
+  box-shadow: 0 0 45px 0 rgba(168, 85, 247, 0.8), 0 0 20px 0 rgba(147, 51, 234, 0.6), inset 0 1px 3px rgba(255, 255, 255, 0.6);
+}
+
+.glow-cyan-card {
+  box-shadow: 0 0 25px rgba(0, 242, 254, 0.35), inset 0 0 18px rgba(0, 242, 254, 0.12);
+}
+
+.glow-cyan-card:hover {
+  box-shadow: 0 0 35px rgba(0, 242, 254, 0.55), inset 0 0 25px rgba(0, 242, 254, 0.2);
+}
+
+.text-glow-cyan {
+  text-shadow: 0 0 12px rgba(0, 242, 254, 0.7), 0 0 25px rgba(0, 242, 254, 0.4);
+}
+
+.text-glow-purple {
+  text-shadow: 0 0 12px rgba(168, 85, 247, 0.7);
+}
+
+.glow-cyan-icon {
+  filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.8));
+}
+
+/* Cyber grid & circuitry animation */
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+@keyframes floatParticle {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.2);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-40px) scale(1);
+    opacity: 0;
+  }
+}

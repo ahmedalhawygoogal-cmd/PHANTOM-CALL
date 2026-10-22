@@ -1,0 +1,6 @@
+{
+  "name": "Phantom Call",
+  "description": "High-fidelity gaming and room voice call application with instant rooms and seamless PWA support.",
+  "requestFramePermissions": ["camera", "microphone", "display-capture"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
