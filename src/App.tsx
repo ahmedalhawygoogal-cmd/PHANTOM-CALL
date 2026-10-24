@@ -58,6 +58,7 @@ export default function App() {
       {/* If in an active call, show the Call View with Jitsi Meet */}
       {activeRoom ? (
         <CallView
+          key={activeRoom.code}
           roomCode={activeRoom.code}
           roomType={activeRoom.type}
           displayName={activeRoom.displayName}

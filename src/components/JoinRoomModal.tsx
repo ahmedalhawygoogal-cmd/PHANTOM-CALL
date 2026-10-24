@@ -16,6 +16,12 @@ export const JoinRoomModal: React.FC<JoinRoomModalProps> = ({
   const [displayName, setDisplayName] = useState('');
   const [error, setError] = useState('');
 
+  React.useEffect(() => {
+    if (isOpen) {
+      setError('');
+    }
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const handlePaste = async () => {

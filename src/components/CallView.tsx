@@ -103,6 +103,7 @@ export const CallView: React.FC<CallViewProps> = ({
 
       try {
         containerRef.current.innerHTML = '';
+        console.log('Connecting to dynamic Jitsi roomName:', sanitizedRoom);
         const api = new window.JitsiMeetExternalAPI('meet.jit.si', {
           roomName: sanitizedRoom,
           parentNode: containerRef.current,

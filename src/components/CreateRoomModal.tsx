@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Plus, X, Shield, Swords, Gamepad2, Trophy, Sparkles, User } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Plus, X, Shield, Swords, Gamepad2, Trophy, Sparkles, User, Copy, Check, RefreshCw } from 'lucide-react';
 
 interface CreateRoomModalProps {
   isOpen: boolean;
@@ -63,6 +63,12 @@ const ROOM_TYPES: RoomTypeOption[] = [
   },
 ];
 
+// Helper to generate a unique random room code
+const generateRandomRoomCode = () => {
+  const randomSuffix = Math.random().toString(36).substring(2, 7).toUpperCase();
+  return `PHANTOM-${randomSuffix}`;
+};
+
 export const CreateRoomModal: React.FC<CreateRoomModalProps> = ({
   isOpen,
   onClose,
@@ -70,12 +76,33 @@ export const CreateRoomModal: React.FC<CreateRoomModalProps> = ({
 }) => {
   const [selectedType, setSelectedType] = useState<RoomTypeKey>('scrims');
   const [displayName, setDisplayName] = useState('');
-  const [customRoomNumber] = useState(() => Math.floor(1000 + Math.random() * 9000));
+  const [generatedCode, setGeneratedCode] = useState(() => generateRandomRoomCode());
+  const [copied, setCopied] = useState(false);
+
+  // Re-generate a fresh random room code each time the modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setGeneratedCode(generateRandomRoomCode());
+      setCopied(false);
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
   const currentOption = ROOM_TYPES.find((t) => t.key === selectedType) || ROOM_TYPES[0];
-  const generatedCode = `PHANTOM-${currentOption.codePrefix}-${customRoomNumber}`;
+
+  const handleCopyCode = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(generatedCode);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  };
+
+  const handleRegenerateCode = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setGeneratedCode(generateRandomRoomCode());
+    setCopied(false);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -108,7 +135,7 @@ export const CreateRoomModal: React.FC<CreateRoomModalProps> = ({
             <Plus className="w-6 h-6 text-white stroke-[2.5]" />
           </div>
           <h2 className="text-2xl font-bold text-white tracking-wide">إنشاء غرفة جديدة</h2>
-          <p className="text-sm text-gray-400 mt-1">اختر نوع الغرفة لتوليد كود مشفر للمكالمة الجماعية</p>
+          <p className="text-sm text-gray-400 mt-1">كود الغرفة يتم توليده عشوائياً ويمكنك نسخه ومشاركته</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
@@ -170,18 +197,55 @@ export const CreateRoomModal: React.FC<CreateRoomModalProps> = ({
             </div>
           </div>
 
-          {/* Generated Code Preview */}
-          <div className="rounded-2xl bg-[#060a1c] border border-cyan-500/30 p-3.5 flex items-center justify-between">
-            <div>
-              <span className="text-[11px] text-gray-400 block">كود الغرفة المولد:</span>
-              <span className="font-rajdhani font-bold text-lg text-cyan-300 tracking-wider">
+          {/* Generated Dynamic Code Display with 1-Click Copy and Regenerate */}
+          <div className="rounded-2xl bg-[#060a1c] border border-cyan-500/40 p-4 space-y-2.5 shadow-[inset_0_0_15px_rgba(0,242,254,0.1)]">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-gray-300 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                <span>كود الغرفة العشوائي الخاص بك:</span>
+              </span>
+              <button
+                type="button"
+                onClick={handleRegenerateCode}
+                className="text-gray-400 hover:text-cyan-300 flex items-center gap-1 text-[11px] transition-colors"
+                title="توليد كود آخر"
+              >
+                <RefreshCw className="w-3 h-3" />
+                <span>كود جديد</span>
+              </button>
+            </div>
+
+            <div className="flex items-center justify-between gap-3 bg-[#0a122e] px-4 py-3 rounded-xl border border-white/10">
+              <span className="font-rajdhani font-bold text-xl text-cyan-300 tracking-widest select-all">
                 {generatedCode}
               </span>
+
+              <button
+                type="button"
+                onClick={handleCopyCode}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                  copied
+                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                    : 'bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-400/40 active:scale-95'
+                }`}
+              >
+                {copied ? (
+                  <>
+                    <Check className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>تم النسخ!</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-3.5 h-3.5" />
+                    <span>نسخ الكود</span>
+                  </>
+                )}
+              </button>
             </div>
-            <div className="flex items-center gap-1.5 text-xs text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 px-3 py-1.5 rounded-xl">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>تشفير مباشر</span>
-            </div>
+
+            <p className="text-[11px] text-gray-400">
+              {copied ? '✅ تم نسخ الكود، يمكنك إرساله لأصدقائك للانضمام فوراً.' : '💡 شارك هذا الكود مع أصدقائك ليدخلوا لنفس الغرفة معك.'}
+            </p>
           </div>
 
           {/* Submit Action */}
@@ -190,7 +254,7 @@ export const CreateRoomModal: React.FC<CreateRoomModalProps> = ({
             className="w-full py-4 rounded-2xl font-bold text-base text-white bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-700 hover:from-purple-500 hover:to-indigo-500 shadow-[0_0_25px_rgba(147,51,234,0.6)] border border-purple-300/40 transition-all duration-200 transform active:scale-[0.99] flex items-center justify-center gap-2"
           >
             <Plus className="w-5 h-5 stroke-[2.5]" />
-            <span>بدء المكالمة الآن</span>
+            <span>دخول الغرفة وبدء المكالمة</span>
           </button>
         </form>
       </div>
