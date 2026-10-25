@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { PhoneOff, Copy, Check, Mic, MicOff, Shield, Radio, Volume2, AlertCircle } from 'lucide-react';
+import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
+import { PhoneOff, Copy, Check, MicOff, Shield, Radio, Volume2, AlertCircle } from 'lucide-react';
+import { toJitsiRoomName } from '../utils/roomCode';
 
 interface CallViewProps {
   roomCode: string;
@@ -31,8 +32,7 @@ export const CallView: React.FC<CallViewProps> = ({
   const [isLoading, setIsLoading] = useState(true);
   const [useIframeFallback, setUseIframeFallback] = useState(false);
 
-  // Clean room identifier for Jitsi
-  const sanitizedRoom = roomCode.replace(/[^a-zA-Z0-9-_]/g, '_');
+  const sanitizedRoom = useMemo(() => toJitsiRoomName(roomCode), [roomCode]);
 
   // Call duration timer
   useEffect(() => {

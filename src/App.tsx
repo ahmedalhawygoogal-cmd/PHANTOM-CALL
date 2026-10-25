@@ -10,6 +10,7 @@ import { CreateRoomModal } from './components/CreateRoomModal';
 import { JoinRoomModal } from './components/JoinRoomModal';
 import { CallView } from './components/CallView';
 import { PWAInstallBanner } from './components/PWAInstallBanner';
+import { generateRandomRoomCode, normalizeRoomCode } from './utils/roomCode';
 
 interface ActiveRoom {
   code: string;
@@ -21,22 +22,29 @@ export default function App() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
   const [activeRoom, setActiveRoom] = useState<ActiveRoom | null>(null);
+  const [pendingCreateCode, setPendingCreateCode] = useState('');
 
-  // Handle room creation
+  const openCreateRoom = () => {
+    setPendingCreateCode(generateRandomRoomCode());
+    setIsCreateModalOpen(true);
+  };
+
   const handleStartCreatedRoom = (roomCode: string, roomType: string, displayName: string) => {
+    const code = normalizeRoomCode(roomCode) || pendingCreateCode || generateRandomRoomCode();
     setIsCreateModalOpen(false);
     setActiveRoom({
-      code: roomCode,
+      code,
       type: roomType,
       displayName,
     });
   };
 
-  // Handle joining existing room
   const handleJoinExistingRoom = (roomCode: string, displayName: string) => {
+    const code = normalizeRoomCode(roomCode);
+    if (!code) return;
     setIsJoinModalOpen(false);
     setActiveRoom({
-      code: roomCode,
+      code,
       type: 'غرفة صوتية',
       displayName,
     });
@@ -80,7 +88,7 @@ export default function App() {
           <section className="w-full flex-1 flex flex-col items-center justify-center gap-6 my-auto py-8">
             {/* 1. "إنشاء غرفة" (Create Room) - Purple Gradient with + Icon */}
             <button
-              onClick={() => setIsCreateModalOpen(true)}
+              onClick={openCreateRoom}
               className="group relative w-full h-[96px] sm:h-[104px] rounded-[32px] p-[2px] transition-all duration-300 transform hover:-translate-y-1 active:translate-y-0.5 active:scale-[0.98] focus:outline-none"
               aria-label="إنشاء غرفة"
             >
@@ -204,6 +212,7 @@ export default function App() {
             isOpen={isCreateModalOpen}
             onClose={() => setIsCreateModalOpen(false)}
             onStartRoom={handleStartCreatedRoom}
+            initialRoomCode={pendingCreateCode}
           />
 
           <JoinRoomModal

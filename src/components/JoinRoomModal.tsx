@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { LogIn, X, Clipboard, User, Hash, AlertCircle } from 'lucide-react';
+import { normalizeRoomCode } from '../utils/roomCode';
 
 interface JoinRoomModalProps {
   isOpen: boolean;
@@ -18,6 +19,7 @@ export const JoinRoomModal: React.FC<JoinRoomModalProps> = ({
 
   React.useEffect(() => {
     if (isOpen) {
+      setRoomCode('');
       setError('');
     }
   }, [isOpen]);
@@ -28,7 +30,7 @@ export const JoinRoomModal: React.FC<JoinRoomModalProps> = ({
     try {
       const text = await navigator.clipboard.readText();
       if (text) {
-        setRoomCode(text.trim().toUpperCase());
+        setRoomCode(normalizeRoomCode(text));
         setError('');
       }
     } catch {
@@ -38,7 +40,7 @@ export const JoinRoomModal: React.FC<JoinRoomModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const cleanedCode = roomCode.trim().toUpperCase();
+    const cleanedCode = normalizeRoomCode(roomCode);
     if (!cleanedCode) {
       setError('يرجى إدخال كود الغرفة');
       return;
@@ -102,10 +104,10 @@ export const JoinRoomModal: React.FC<JoinRoomModalProps> = ({
                 type="text"
                 value={roomCode}
                 onChange={(e) => {
-                  setRoomCode(e.target.value.toUpperCase());
+                  setRoomCode(normalizeRoomCode(e.target.value));
                   setError('');
                 }}
-                placeholder="مثال: PHANTOM-SCRIM-8492"
+                placeholder="مثال: PHANTOM-A3K9P"
                 className="w-full rounded-2xl bg-[#0c122e] border border-cyan-500/40 px-4 py-3.5 text-cyan-300 placeholder-gray-500 font-rajdhani font-bold text-lg tracking-wider focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/40 shadow-[inset_0_0_15px_rgba(0,242,254,0.1)] transition-all text-right pr-11"
                 autoFocus
               />
@@ -140,26 +142,6 @@ export const JoinRoomModal: React.FC<JoinRoomModalProps> = ({
               <div className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400">
                 <User className="w-4 h-4" />
               </div>
-            </div>
-          </div>
-
-          {/* Quick Examples */}
-          <div className="p-3 rounded-2xl bg-[#070b1e] border border-white/5">
-            <span className="text-[11px] text-gray-400 block mb-1.5">أو جرب غرفة تجريبية سريعة:</span>
-            <div className="flex flex-wrap gap-2">
-              {['PHANTOM-SCRIMS-PUBG', 'PHANTOM-VALORANT-WAR', 'PHANTOM-COD-ARENA'].map((demoCode) => (
-                <button
-                  key={demoCode}
-                  type="button"
-                  onClick={() => {
-                    setRoomCode(demoCode);
-                    setError('');
-                  }}
-                  className="text-[11px] font-rajdhani font-semibold text-gray-300 bg-white/5 hover:bg-cyan-500/20 hover:text-cyan-300 px-2.5 py-1 rounded-lg border border-white/10 transition-colors"
-                >
-                  {demoCode}
-                </button>
-              ))}
             </div>
           </div>
 

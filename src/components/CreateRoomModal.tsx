@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, X, Shield, Swords, Gamepad2, Trophy, Sparkles, User, Copy, Check, RefreshCw } from 'lucide-react';
+import { generateRandomRoomCode } from '../utils/roomCode';
 
 interface CreateRoomModalProps {
   isOpen: boolean;
   onClose: () => void;
   onStartRoom: (roomCode: string, roomType: string, displayName: string) => void;
+  initialRoomCode?: string;
 }
 
 export type RoomTypeKey = 'scrims' | 'ranked' | 'casual' | 'tournament';
 
 interface RoomTypeOption {
   key: RoomTypeKey;
-  codePrefix: string;
   titleAr: string;
   titleEn: string;
   desc: string;
@@ -23,7 +24,6 @@ interface RoomTypeOption {
 const ROOM_TYPES: RoomTypeOption[] = [
   {
     key: 'scrims',
-    codePrefix: 'SCRIM',
     titleAr: 'سكرمز (Scrims)',
     titleEn: 'Team Scrims',
     desc: 'مباريات تدريبية وتنسيق بين الكلانات والفرق',
@@ -33,7 +33,6 @@ const ROOM_TYPES: RoomTypeOption[] = [
   },
   {
     key: 'ranked',
-    codePrefix: 'RANKED',
     titleAr: 'رانكد (Ranked)',
     titleEn: 'Ranked Match',
     desc: 'مكالمات تنافسية هادئة وسريعة بدون تشويش',
@@ -43,7 +42,6 @@ const ROOM_TYPES: RoomTypeOption[] = [
   },
   {
     key: 'casual',
-    codePrefix: 'CASUAL',
     titleAr: 'كاجوال (Casual)',
     titleEn: 'Casual Play',
     desc: 'لعب خفيف مع الأصدقاء وسوالف جيمرز',
@@ -53,7 +51,6 @@ const ROOM_TYPES: RoomTypeOption[] = [
   },
   {
     key: 'tournament',
-    codePrefix: 'TOURNEY',
     titleAr: 'بطولات (Tournament)',
     titleEn: 'Championship',
     desc: 'غرف صوتية مخصصة للنهائيات والبطولات الرسمية',
@@ -63,29 +60,22 @@ const ROOM_TYPES: RoomTypeOption[] = [
   },
 ];
 
-// Helper to generate a unique random room code
-const generateRandomRoomCode = () => {
-  const randomSuffix = Math.random().toString(36).substring(2, 7).toUpperCase();
-  return `PHANTOM-${randomSuffix}`;
-};
-
 export const CreateRoomModal: React.FC<CreateRoomModalProps> = ({
   isOpen,
   onClose,
   onStartRoom,
+  initialRoomCode,
 }) => {
   const [selectedType, setSelectedType] = useState<RoomTypeKey>('scrims');
   const [displayName, setDisplayName] = useState('');
-  const [generatedCode, setGeneratedCode] = useState(() => generateRandomRoomCode());
+  const [generatedCode, setGeneratedCode] = useState(() => initialRoomCode || generateRandomRoomCode());
   const [copied, setCopied] = useState(false);
 
-  // Re-generate a fresh random room code each time the modal opens
   useEffect(() => {
-    if (isOpen) {
-      setGeneratedCode(generateRandomRoomCode());
-      setCopied(false);
-    }
-  }, [isOpen]);
+    if (!isOpen) return;
+    setGeneratedCode(initialRoomCode || generateRandomRoomCode());
+    setCopied(false);
+  }, [isOpen, initialRoomCode]);
 
   if (!isOpen) return null;
 
