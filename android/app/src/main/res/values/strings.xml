@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Phantom Call</string>
+    <string name="title_activity_main">Phantom Call</string>
+    <string name="package_name">com.phantom.call</string>
+    <string name="custom_url_scheme">com.phantom.call</string>
+</resources>
