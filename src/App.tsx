@@ -74,13 +74,13 @@ export default function App() {
         />
       ) : (
         /* Main Application View - Exact Replica of Uploaded Design */
-        <main className="relative z-10 w-full max-w-[440px] min-h-screen flex flex-col justify-between px-5 pt-8 pb-0 mx-auto select-none">
+        <main className="relative z-10 w-full max-w-[440px] min-h-screen flex flex-col justify-between px-5 pt-[max(2.5rem,calc(env(safe-area-inset-top)+1.5rem))] pb-0 mx-auto select-none overflow-visible">
           {/* Top Logo Section */}
-          <header className="w-full pt-4 pb-2 flex justify-center items-center">
+          <header className="w-full pt-2 pb-4 flex justify-center items-center overflow-visible">
             <img
               src="/logo.png"
               alt="Phantom Call Logo"
-              className="h-16 w-auto object-contain mix-blend-screen drop-shadow-[0_0_10px_rgba(6,182,212,0.5)] transition-transform duration-300 hover:scale-105"
+              className="h-20 w-auto max-w-[88%] object-contain object-center drop-shadow-[0_0_18px_rgba(6,182,212,0.55)] transition-transform duration-300 hover:scale-105"
             />
           </header>
 

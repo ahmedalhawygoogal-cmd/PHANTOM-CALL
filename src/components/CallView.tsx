@@ -119,10 +119,16 @@ export const CallView: React.FC<CallViewProps> = ({
             prejoinPageEnabled: false,
             prejoinConfig: { enabled: false },
             requireDisplayName: false,
+            lobby: { enabled: false },
+            enableLobby: false,
+            startAsModerator: true,
+            hideConferenceSubject: true,
+            hideConferenceTimer: true,
             disableDeepLinking: true,
             enableWelcomePage: false,
             enableClosePage: false,
             defaultLanguage: 'ar',
+            toolbarButtons: ['microphone', 'hangup', 'settings'],
           },
           interfaceConfigOverwrite: {
             SHOW_JITSI_WATERMARK: false,
@@ -130,19 +136,7 @@ export const CallView: React.FC<CallViewProps> = ({
             SHOW_BRAND_WATERMARK: false,
             SHOW_POWERED_BY: false,
             DEFAULT_BACKGROUND: '#050814',
-            TOOLBAR_BUTTONS: [
-              'microphone',
-              'closedcaptions',
-              'fullscreen',
-              'fodeviceselection',
-              'hangup',
-              'profile',
-              'chat',
-              'settings',
-              'raisehand',
-              'tileview',
-              'mute-everyone',
-            ],
+            TOOLBAR_BUTTONS: ['microphone', 'hangup', 'settings'],
           },
         });
 
@@ -203,7 +197,7 @@ export const CallView: React.FC<CallViewProps> = ({
   return (
     <div className="fixed inset-0 z-40 flex flex-col bg-[#050814] text-white overflow-hidden select-none" dir="rtl">
       {/* Top Cyber Call Header */}
-      <header className="relative z-50 flex items-center justify-between px-4 py-3 bg-[#070b1e]/95 backdrop-blur-md border-b border-cyan-500/20 shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+      <header className="relative z-50 flex items-center justify-between px-4 py-3 pt-[max(0.75rem,env(safe-area-inset-top))] bg-[#070b1e]/95 backdrop-blur-md border-b border-cyan-500/20 shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
         {/* Left / Start Info: Room Type & Code */}
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
@@ -297,7 +291,7 @@ export const CallView: React.FC<CallViewProps> = ({
 
         {useIframeFallback ? (
           <iframe
-            src={`https://meet.jit.si/${sanitizedRoom}#config.prejoinPageEnabled=false&config.prejoinConfig.enabled=false&config.startWithAudioMuted=false&config.startWithVideoMuted=true&config.disableVideo=true&config.disableDeepLinking=true&userInfo.displayName=${encodeURIComponent(
+            src={`https://meet.jit.si/${sanitizedRoom}#config.prejoinPageEnabled=false&config.prejoinConfig.enabled=false&config.lobby.enabled=false&config.enableLobby=false&config.startAsModerator=true&config.hideConferenceSubject=true&config.hideConferenceTimer=true&config.startWithAudioMuted=false&config.startWithVideoMuted=true&config.disableVideo=true&config.disableDeepLinking=true&userInfo.displayName=${encodeURIComponent(
               displayName
             )}`}
             title="Phantom Call Audio Room"
