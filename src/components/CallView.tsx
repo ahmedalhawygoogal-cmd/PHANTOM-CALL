@@ -115,6 +115,7 @@ export const CallView: React.FC<CallViewProps> = ({
           configOverwrite: {
             startWithAudioMuted: false,
             startWithVideoMuted: true,
+            disableVideo: true,
             prejoinPageEnabled: false,
             prejoinConfig: { enabled: false },
             requireDisplayName: false,
@@ -131,9 +132,7 @@ export const CallView: React.FC<CallViewProps> = ({
             DEFAULT_BACKGROUND: '#050814',
             TOOLBAR_BUTTONS: [
               'microphone',
-              'camera',
               'closedcaptions',
-              'desktop',
               'fullscreen',
               'fodeviceselection',
               'hangup',
@@ -141,7 +140,6 @@ export const CallView: React.FC<CallViewProps> = ({
               'chat',
               'settings',
               'raisehand',
-              'videoquality',
               'tileview',
               'mute-everyone',
             ],
@@ -299,7 +297,7 @@ export const CallView: React.FC<CallViewProps> = ({
 
         {useIframeFallback ? (
           <iframe
-            src={`https://meet.jit.si/${sanitizedRoom}#config.prejoinPageEnabled=false&config.prejoinConfig.enabled=false&config.startWithAudioMuted=false&config.disableDeepLinking=true&userInfo.displayName=${encodeURIComponent(
+            src={`https://meet.jit.si/${sanitizedRoom}#config.prejoinPageEnabled=false&config.prejoinConfig.enabled=false&config.startWithAudioMuted=false&config.startWithVideoMuted=true&config.disableVideo=true&config.disableDeepLinking=true&userInfo.displayName=${encodeURIComponent(
               displayName
             )}`}
             title="Phantom Call Audio Room"
