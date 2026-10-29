@@ -104,7 +104,7 @@ export const CallView: React.FC<CallViewProps> = ({
       try {
         containerRef.current.innerHTML = '';
         console.log('Connecting to dynamic Jitsi roomName:', sanitizedRoom);
-        const api = new window.JitsiMeetExternalAPI('meet.ffmuc.net', {
+        const api = new window.JitsiMeetExternalAPI('meet.jit.si', {
           roomName: sanitizedRoom,
           parentNode: containerRef.current,
           width: '100%',
@@ -128,15 +128,15 @@ export const CallView: React.FC<CallViewProps> = ({
             enableWelcomePage: false,
             enableClosePage: false,
             defaultLanguage: 'ar',
-            toolbarButtons: ['microphone', 'hangup', 'settings'],
+            toolbarButtons: [],
           },
           interfaceConfigOverwrite: {
+            TOOLBAR_BUTTONS: [],
             SHOW_JITSI_WATERMARK: false,
             SHOW_WATERMARK_FOR_GUESTS: false,
             SHOW_BRAND_WATERMARK: false,
-            SHOW_POWERED_BY: false,
-            DEFAULT_BACKGROUND: '#050814',
-            TOOLBAR_BUTTONS: ['microphone', 'hangup', 'settings'],
+            DEFAULT_BACKGROUND: '#0B0F19',
+            DISABLE_JOIN_LEAVE_NOTIFICATIONS: true,
           },
         });
 
@@ -165,7 +165,7 @@ export const CallView: React.FC<CallViewProps> = ({
       initJitsi();
     } else {
       scriptElement = document.createElement('script');
-      scriptElement.src = 'https://meet.ffmuc.net/external_api.js';
+      scriptElement.src = 'https://meet.jit.si/external_api.js';
       scriptElement.async = true;
       scriptElement.onload = () => {
         initJitsi();
@@ -291,7 +291,7 @@ export const CallView: React.FC<CallViewProps> = ({
 
         {useIframeFallback ? (
           <iframe
-            src={`https://meet.ffmuc.net/${sanitizedRoom}#config.prejoinPageEnabled=false&config.startAsModerator=true&config.startWithAudioMuted=false&config.startWithVideoMuted=true&config.disableVideo=true&config.disableDeepLinking=true&userInfo.displayName=${encodeURIComponent(
+            src={`https://meet.jit.si/${sanitizedRoom}#config.prejoinPageEnabled=false&config.startAsModerator=true&config.toolbarButtons=[]&interfaceConfig.TOOLBAR_BUTTONS=[]&config.startWithAudioMuted=false&config.startWithVideoMuted=true&config.disableVideo=true&config.disableDeepLinking=true&userInfo.displayName=${encodeURIComponent(
               displayName
             )}`}
             title="Phantom Call Audio Room"
