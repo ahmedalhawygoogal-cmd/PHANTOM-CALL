@@ -104,7 +104,7 @@ export const CallView: React.FC<CallViewProps> = ({
       try {
         containerRef.current.innerHTML = '';
         console.log('Connecting to dynamic Jitsi roomName:', sanitizedRoom);
-        const api = new window.JitsiMeetExternalAPI('meet.jit.si', {
+        const api = new window.JitsiMeetExternalAPI('meet.ffmuc.net', {
           roomName: sanitizedRoom,
           parentNode: containerRef.current,
           width: '100%',
@@ -165,7 +165,7 @@ export const CallView: React.FC<CallViewProps> = ({
       initJitsi();
     } else {
       scriptElement = document.createElement('script');
-      scriptElement.src = 'https://meet.jit.si/external_api.js';
+      scriptElement.src = 'https://meet.ffmuc.net/external_api.js';
       scriptElement.async = true;
       scriptElement.onload = () => {
         initJitsi();
@@ -291,7 +291,7 @@ export const CallView: React.FC<CallViewProps> = ({
 
         {useIframeFallback ? (
           <iframe
-            src={`https://meet.jit.si/${sanitizedRoom}#config.prejoinPageEnabled=false&config.prejoinConfig.enabled=false&config.lobby.enabled=false&config.enableLobby=false&config.startAsModerator=true&config.hideConferenceSubject=true&config.hideConferenceTimer=true&config.startWithAudioMuted=false&config.startWithVideoMuted=true&config.disableVideo=true&config.disableDeepLinking=true&userInfo.displayName=${encodeURIComponent(
+            src={`https://meet.ffmuc.net/${sanitizedRoom}#config.prejoinPageEnabled=false&config.startAsModerator=true&config.startWithAudioMuted=false&config.startWithVideoMuted=true&config.disableVideo=true&config.disableDeepLinking=true&userInfo.displayName=${encodeURIComponent(
               displayName
             )}`}
             title="Phantom Call Audio Room"

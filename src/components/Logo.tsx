@@ -13,7 +13,7 @@ export const Logo: React.FC<LogoProps> = ({ className = '', size = 'md' }) => {
       <img
         src="/logo.png"
         alt="Phantom Call Logo"
-        className={`${heightClass} w-auto object-contain mix-blend-screen drop-shadow-[0_0_10px_rgba(6,182,212,0.5)] transition-transform duration-300 hover:scale-105`}
+        className={`${heightClass} w-auto object-contain p-2 drop-shadow-[0_0_10px_rgba(6,182,212,0.5)] transition-transform duration-300 hover:scale-105`}
       />
     </div>
   );

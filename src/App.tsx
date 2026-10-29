@@ -76,11 +76,11 @@ export default function App() {
         /* Main Application View - Exact Replica of Uploaded Design */
         <main className="relative z-10 w-full max-w-[440px] min-h-screen flex flex-col justify-between px-5 pt-[max(2.5rem,calc(env(safe-area-inset-top)+1.5rem))] pb-0 mx-auto select-none overflow-visible">
           {/* Top Logo Section */}
-          <header className="w-full pt-2 pb-4 flex justify-center items-center overflow-visible">
+          <header className="w-full p-2 pb-4 flex justify-center items-center overflow-visible">
             <img
               src="/logo.png"
               alt="Phantom Call Logo"
-              className="h-20 w-auto max-w-[88%] object-contain object-center drop-shadow-[0_0_18px_rgba(6,182,212,0.55)] transition-transform duration-300 hover:scale-105"
+              className="h-20 w-auto max-w-[88%] object-contain p-2 drop-shadow-[0_0_18px_rgba(6,182,212,0.55)] transition-transform duration-300 hover:scale-105"
             />
           </header>
 
@@ -93,10 +93,10 @@ export default function App() {
               aria-label="إنشاء غرفة"
             >
               {/* Outer Neon Glow */}
-              <div className="absolute inset-0 rounded-[32px] bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 opacity-80 blur-xl group-hover:opacity-100 group-hover:blur-2xl transition-all duration-300" />
+              <div className="absolute inset-0 rounded-[32px] bg-gradient-to-r from-purple-500 via-fuchsia-500 to-indigo-500 opacity-90 blur-2xl group-hover:opacity-100 group-hover:blur-3xl transition-all duration-300" />
 
               {/* Main Button Surface */}
-              <div className="relative w-full h-full rounded-[30px] bg-gradient-to-r from-[#6929f0] via-[#7d32f5] to-[#5a1cd6] border border-purple-300/40 shadow-[inset_0_2px_4px_rgba(255,255,255,0.4),0_0_35px_rgba(125,50,245,0.7)] flex items-center justify-center px-8 overflow-hidden">
+              <div className="relative w-full h-full rounded-[30px] bg-gradient-to-r from-[#7c3aed] via-[#8b5cf6] to-[#6d28d9] border-2 border-purple-200/70 shadow-[inset_0_2px_4px_rgba(255,255,255,0.45),0_0_48px_rgba(168,85,247,0.95)] flex items-center justify-center px-8 overflow-hidden">
                 {/* Top specular glossy reflection line */}
                 <div className="absolute top-0 inset-x-6 h-[2px] bg-gradient-to-r from-transparent via-white/50 to-transparent" />
 
@@ -125,10 +125,10 @@ export default function App() {
               aria-label="دخول غرفة"
             >
               {/* Outer Cyan Neon Glow */}
-              <div className="absolute inset-0 rounded-[32px] bg-[#00f2fe] opacity-30 blur-xl group-hover:opacity-60 group-hover:blur-2xl transition-all duration-300" />
+              <div className="absolute inset-0 rounded-[32px] bg-[#00f2fe] opacity-55 blur-2xl group-hover:opacity-90 group-hover:blur-3xl transition-all duration-300" />
 
               {/* Main Button Surface */}
-              <div className="relative w-full h-full rounded-[30px] bg-[#061129]/85 backdrop-blur-md border-[2.5px] border-[#00f2fe] shadow-[0_0_25px_rgba(0,242,254,0.4),inset_0_0_18px_rgba(0,242,254,0.12)] flex items-center justify-center px-8 overflow-hidden">
+              <div className="relative w-full h-full rounded-[30px] bg-[#03101f] backdrop-blur-md border-[3px] border-[#5efbff] shadow-[0_0_48px_rgba(0,242,254,0.75),inset_0_0_22px_rgba(0,242,254,0.22)] flex items-center justify-center px-8 overflow-hidden">
                 {/* Inner flex layout matching mockup: Enter icon on the left, "دخول غرفة" on the right */}
                 <div className="w-full flex items-center justify-center gap-5" dir="ltr">
                   {/* Cyan Door / Portal Enter Icon matching mockup */}
